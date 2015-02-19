@@ -29,6 +29,9 @@ def run_cli():
 
     parser.add_argument("options", help="+USERNAME will get the user info, \
         DOMAIN will get domain info", type=str)
+    
+    parser.add_argument("--get", help="Optional argument for getting \
+        specific information (twitter, bitcoin, github) about ONENAME user", type=str)
 
     # Print default help message, if no argument is given
     if len(sys.argv) == 1:
@@ -54,7 +57,33 @@ def run_cli():
                 ANSWER SECTION:\n" % (username)
             sys.stdout.write(s)
 
-        sys.stdout.write(pretty_dump(data))
+        if len(sys.argv) == 2:
+            sys.stdout.write(pretty_dump(data))
+        elif len(sys.argv) > 2:
+
+            if str(args.get) == "github":
+                
+                if 'github' in data:
+                    sys.stdout.write(pretty_dump(data['github']))
+                else:
+                    sys.stdout.write(pretty_dump({}))
+
+            elif str(args.get) == "bitcoin":
+
+                if 'bitcoin' in data:
+                    sys.stdout.write(pretty_dump(data['bitcoin']))
+                else:
+                    sys.stdout.write(pretty_dump({}))
+
+            elif str(args.get) == "twitter":
+                if 'twitter' in data:
+                    sys.stdout.write(pretty_dump(data['twitter']))
+                else:
+                    sys.stdout.write(pretty_dump({}))
+            else:
+                parser.print_help()
+                exit(1)
+
         print_ons_footer(elapsed_time)
 
     else:                                       # domain

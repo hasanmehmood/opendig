@@ -33,7 +33,7 @@ def error_reply(msg, code=-1):
 
 
 def ons_resolver(key):
-
+    
     def check_server(server):
 
         try:
